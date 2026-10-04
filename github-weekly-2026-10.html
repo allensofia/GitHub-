@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub 热门项目周报 · 2026年10月第一周</title>
+<style>
+  :root{
+    --bg:#0d1117;
+    --panel:#161b22;
+    --panel-2:#1c2128;
+    --border:#30363d;
+    --border-soft:#21262d;
+    --text:#e6edf3;
+    --text-dim:#8b949e;
+    --text-faint:#6e7681;
+    --accent-1:#6366f1;
+    --accent-2:#22d3ee;
+    --green:#3fb950;
+    --gold:#e3b341;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none}
+  a:hover{text-decoration:none}
+
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+
+  /* ===== Header ===== */
+  header{
+    position:relative;
+    overflow:hidden;
+    padding:72px 0 64px;
+    background:
+      radial-gradient(900px 420px at 12% -10%, rgba(99,102,241,.28), transparent 60%),
+      radial-gradient(900px 420px at 88% -10%, rgba(34,211,238,.20), transparent 60%),
+      var(--bg);
+    border-bottom:1px solid var(--border-soft);
+  }
+  .badge{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:6px 14px;border:1px solid var(--border);border-radius:999px;
+    background:rgba(255,255,255,.03);color:var(--text-dim);
+    font-size:13px;font-weight:500;
+  }
+  .badge .dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(63,185,80,.18)}
+  header h1{
+    margin:22px 0 14px;
+    font-size:clamp(30px,5vw,46px);
+    font-weight:800;letter-spacing:-.02em;line-height:1.15;
+  }
+  header h1 .grad{
+    background:linear-gradient(100deg,var(--accent-1),var(--accent-2));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  header p.sub{max-width:720px;color:var(--text-dim);font-size:16px}
+
+  /* ===== Stat chips ===== */
+  .stats{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:14px;
+    margin:-34px 0 8px;position:relative;
+  }
+  .stat{
+    background:var(--panel);border:1px solid var(--border);
+    border-radius:14px;padding:18px 20px;
+  }
+  .stat .k{font-size:13px;color:var(--text-faint);margin-bottom:6px}
+  .stat .v{font-size:24px;font-weight:700;letter-spacing:-.01em}
+  .stat .v small{font-size:13px;font-weight:500;color:var(--text-dim);margin-left:4px}
+
+  /* ===== Section ===== */
+  section{margin:56px 0}
+  .sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:22px}
+  .sec-head h2{font-size:22px;font-weight:700;letter-spacing:-.01em}
+  .sec-head .en{color:var(--text-faint);font-size:13px;font-weight:500}
+  .sec-head .rule{flex:1;height:1px;background:var(--border-soft)}
+
+  /* ===== Top list ===== */
+  .top-list{display:flex;flex-direction:column;gap:10px}
+  .top-item{
+    display:grid;grid-template-columns:46px 1fr 210px;gap:18px;align-items:center;
+    background:var(--panel);border:1px solid var(--border);
+    border-radius:14px;padding:16px 18px;
+    transition:transform .15s ease,border-color .15s ease;
+  }
+  .top-item:hover{transform:translateY(-2px);border-color:#4c5560}
+  .rank{
+    font-size:22px;font-weight:800;color:var(--text-faint);
+    font-variant-numeric:tabular-nums;text-align:center;
+  }
+  .rank.top1{color:var(--gold)}
+  .rank.top2{color:#c0c6cc}
+  .rank.top3{color:#d2994f}
+  .t-main{min-width:0}
+  .t-title{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  .t-title a.name{font-size:16px;font-weight:600;color:#58a6ff}
+  .t-title a.name:hover{text-decoration:underline}
+  .lang{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--text-dim)}
+  .lang .ldot{width:10px;height:10px;border-radius:50%}
+  .t-desc{margin-top:5px;font-size:13.5px;color:var(--text-dim)}
+  .t-tags{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap}
+  .tag{font-size:11.5px;padding:2px 9px;border-radius:999px;background:rgba(99,102,241,.14);color:#a5b4fc;border:1px solid rgba(99,102,241,.25)}
+  .t-stars{display:flex;flex-direction:column;gap:7px}
+  .t-nums{display:flex;justify-content:space-between;align-items:baseline;font-variant-numeric:tabular-nums}
+  .t-nums .gain{font-size:17px;font-weight:700;color:var(--green)}
+  .t-nums .gain::before{content:"+";font-weight:600}
+  .t-nums .total{font-size:12px;color:var(--text-faint)}
+  .bar{height:8px;border-radius:999px;background:var(--panel-2);overflow:hidden}
+  .bar > i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent-1),var(--accent-2))}
+
+  /* ===== Category ===== */
+  .cat{margin-bottom:38px}
+  .cat-head{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+  .cat-head h3{font-size:17px;font-weight:700}
+  .cat-head .cnt{font-size:12px;color:var(--text-faint);background:var(--panel);border:1px solid var(--border);border-radius:999px;padding:2px 10px}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .card{
+    background:var(--panel);border:1px solid var(--border);border-radius:14px;
+    padding:16px 18px;transition:transform .15s ease,border-color .15s ease;
+  }
+  .card:hover{transform:translateY(-2px);border-color:#4c5560}
+  .card .c-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .card a.name{font-size:15px;font-weight:600;color:#58a6ff;word-break:break-all}
+  .card a.name:hover{text-decoration:underline}
+  .card .gain{font-size:12.5px;color:var(--green);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .card .gain::before{content:"+";font-weight:600}
+  .card .c-lang{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--text-dim);margin-top:6px}
+  .card .c-lang .ldot{width:9px;height:9px;border-radius:50%}
+  .card .c-desc{margin-top:8px;font-size:13px;color:var(--text-dim)}
+
+  /* ===== Insights ===== */
+  .insights{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .insight{
+    background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:20px;
+  }
+  .insight .i-icon{font-size:22px}
+  .insight h3{margin:10px 0 8px;font-size:16px;font-weight:700}
+  .insight p{font-size:13.5px;color:var(--text-dim)}
+
+  /* ===== Footer ===== */
+  footer{margin-top:72px;padding:40px 0 56px;border-top:1px solid var(--border-soft)}
+  footer .note{font-size:13px;color:var(--text-faint);margin-bottom:20px}
+  footer h4{font-size:13px;color:var(--text-dim);margin-bottom:10px;font-weight:600}
+  footer .srcs{display:flex;flex-wrap:wrap;gap:8px}
+  footer .srcs a{font-size:12px;color:#58a6ff;border:1px solid var(--border);border-radius:999px;padding:4px 12px;background:var(--panel)}
+  footer .srcs a:hover{border-color:#58a6ff}
+
+  @media(max-width:760px){
+    .stats{grid-template-columns:repeat(2,1fr);margin-top:-28px}
+    .grid{grid-template-columns:1fr}
+    .insights{grid-template-columns:1fr}
+    .top-item{grid-template-columns:36px 1fr;grid-template-areas:"rank main" "rank stars"}
+    .rank{grid-area:rank}
+    .t-main{grid-area:main}
+    .t-stars{grid-area:stars}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <span class="badge"><span class="dot"></span>2026.09.27 — 2026.10.04 · 周榜</span>
+    <h1>GitHub 热门项目<span class="grad">周报</span></h1>
+    <p class="sub">过去一周，AI 代理（Agent）生态从「造新工具」转向「管好工具」——编排、记忆、Token 压缩与技能包成为绝对主线。这里整理了本周增长最快的项目与趋势。</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="stats">
+    <div class="stat"><div class="k">统计项目</div><div class="v">26<small>个</small></div></div>
+    <div class="stat"><div class="k">本周最大增量</div><div class="v" style="color:var(--green)">+19.3k<small>★</small></div></div>
+    <div class="stat"><div class="k">周榜冠军</div><div class="v" style="font-size:17px">HowToLiveBetter</div></div>
+    <div class="stat"><div class="k">主线主题</div><div class="v" style="font-size:18px">AI Agent</div></div>
+  </div>
+
+  <section>
+    <div class="sec-head"><h2>本周 Top 10</h2><span class="en">Weekly Trending</span><span class="rule"></span></div>
+    <div class="top-list" id="topList"></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>分类浏览</h2><span class="en">By Category</span><span class="rule"></span></div>
+    <div id="cats"></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>趋势洞察</h2><span class="en">Insights</span><span class="rule"></span></div>
+    <div class="insights">
+      <div class="insight"><div class="i-icon">🎛️</div><h3>「管 agent 的 agent」成为主流</h3><p>本周约一半的热门 AI 仓库，核心功能是调度、编排、隔离或替换他人构建的智能体——而非从零再造一个新 agent。</p></div>
+      <div class="insight"><div class="i-icon">🪙</div><h3>从「加功能」转向「省资源」</h3><p>Token / 上下文压缩工具（如 caveman）、代码预索引、省代码技能包集中涌现，标志着工程化降本成为新焦点。</p></div>
+      <div class="insight"><div class="i-icon">🧩</div><h3>技能包（Skills）成为方法论载体</h3><p>ponytail、superpowers、impeccable 等项目，把工程规范沉淀为可版本控制、可复用的技能，成为新的分发单元。</p></div>
+      <div class="insight"><div class="i-icon">🖥️</div><h3>本地推理与安全沙箱崛起</h3><p>Strata 让 125B 参数模型跑进消费级 GPU，OpenShell 以形式化验证强调安全隔离——算力与信任都开始「下放」。</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="note">说明：数据为多来源汇总的近似值，各来源星数统计口径存在差异，请以仓库实际数据为准。</div>
+    <h4>数据来源</h4>
+    <div class="srcs" id="sources"></div>
+  </footer>
+
+</div>
+
+<script>
+const LANG_COLOR = {
+  "TypeScript":"#3178c6","Python":"#3572A5","HTML":"#e34c26","Rust":"#dea584",
+  "Go":"#00ADD8","C++":"#f34b7d","JavaScript":"#f1e05a","Shell":"#89e051"
+};
+
+// category, name, repo, lang, weekly(+), total, tags[], desc
+const P = [
+  {cat:"AI Agent 编排与基础设施",name:"paperclip",repo:"paperclipai/paperclip",lang:"TypeScript",weekly:13855,total:"~95,000",tags:["编排","团队"],desc:"管理并编排工作中 AI 代理团队的开源平台：自带智能体、分配目标、看板跟踪任务/权限/历史/成本。"},
+  {cat:"AI Agent 编排与基础设施",name:"OpenShell",repo:"NVIDIA/OpenShell",lang:"Rust",weekly:2456,total:"~14,200",tags:["沙箱","运行时"],desc:"NVIDIA 出品的安全私有自主 AI 代理执行环境，强调沙箱隔离、形式化验证与凭据管理，本周单日增幅最猛。"},
+  {cat:"AI Agent 编排与基础设施",name:"ax",repo:"google/ax",lang:"Go",weekly:1900,total:"~12,658",tags:["编排","运行时"],desc:"Google 的声明式集群 agent 编排运行时。"},
+  {cat:"AI Agent 编排与基础设施",name:"WeKnora",repo:"Tencent/WeKnora",lang:"Python",weekly:null,total:"—",tags:["RAG","知识库"],desc:"腾讯开源 LLM 知识平台，面向 RAG、自主推理智能体与自维护 wiki。"},
+  {cat:"AI Agent 编排与基础设施",name:"orca",repo:"stablyai/orca",lang:"TypeScript",weekly:null,total:"—",tags:["编排","并行"],desc:"用于在独立 git worktree 中并行运行成队 coding agent（Codex、Claude Code、OpenCode、Pi）的 ADE。"},
+  {cat:"AI Agent 编排与基础设施",name:"OpenDots",repo:"CopilotKit/OpenDots",lang:"TypeScript",weekly:1036,total:"—",tags:["模板","同事"],desc:"自托管持久化 AI「同事」的开源模板，含 Web、移动端与 Slack 界面。"},
+
+  {cat:"记忆·推理·决策",name:"hindsight",repo:"vectorize-io/hindsight",lang:"Python",weekly:18389,total:"~43,000",tags:["记忆","RAG"],desc:"会「学习」的智能体记忆系统，提供 retain / recall / reflect 三种操作，在 LongMemEval 基准上表现最优。"},
+  {cat:"记忆·推理·决策",name:"laya",repo:"NandhaKishorM/laya",lang:"Python",weekly:6842,total:"~12,000",tags:["推理","决策"],desc:"多语言非自回归决策引擎，约 33ms 单次前向即可完成分类决策。"},
+  {cat:"记忆·推理·决策",name:"deepseek-harness",repo:"deepseek-ai/deepseek-harness",lang:"Python",weekly:4128,total:"~241,758",tags:["框架"],desc:"典型「匀速积累型」项目，日榜隐身但稳居周榜前列。"},
+  {cat:"记忆·推理·决策",name:"Strata",repo:"Niko1221/Strata",lang:"C++",weekly:1323,total:"~3,000",tags:["本地推理"],desc:"本地推理引擎，可在 12–24GB 显存的游戏 PC 上跑 125B 参数模型，速度 60–95 tokens/s。"},
+
+  {cat:"语音",name:"VoiceStudio",repo:"debpalash/VoiceStudio",lang:"Python",weekly:15186,total:"~50,000",tags:["TTS","本地"],desc:"完全本地化的开源 ElevenLabs 替代品，支持 646 种语言的语音克隆、配音、转写与有声书。"},
+
+  {cat:"学习与生活指南",name:"HowToLiveBetter",repo:"eternity4719/HowToLiveBetter",lang:"HTML",weekly:19336,total:"~33,500",tags:["循证","指南"],desc:"高性价比人生指南，收录 498 条循证生活建议，覆盖长寿防病、急救、省钱理财、法律与医保，每条标注成本、收益与证据等级。"},
+  {cat:"学习与生活指南",name:"ai-engineering-from-scratch",repo:"rohitg00/ai-engineering-from-scratch",lang:"Python",weekly:6485,total:"~62,000",tags:["课程","教育"],desc:"从零学 AI 工程的开放课程，共 523 节课、342 小时内容。"},
+  {cat:"学习与生活指南",name:"how-to-live-better",repo:"cdyforever/how-to-live-better",lang:"HTML",weekly:5411,total:"~12,000",tags:["阅读","在线版"],desc:"上述生活指南的在线单页阅读版。"},
+
+  {cat:"技能包 Skills",name:"superpowers",repo:"obra/superpowers",lang:"JavaScript",weekly:null,total:"~294k",tags:["Skills"],desc:"代理技能框架与软件开发方法论，把开发流程写成可组合技能。"},
+  {cat:"技能包 Skills",name:"skills",repo:"mattpocock/skills",lang:"TypeScript",weekly:null,total:"~274k",tags:["Skills"],desc:"TypeScript 作者 Matt Pocock 发布的 AI 编码代理技能库。"},
+  {cat:"技能包 Skills",name:"ponytail",repo:"DietrichGebert/ponytail",lang:"Shell",weekly:null,total:"~151k",tags:["Skills","省代码"],desc:"让代理「像最懒的资深工程师一样思考」，优先复用方案，宣称代码行数平均减少约 54%。"},
+  {cat:"技能包 Skills",name:"impeccable",repo:"pbakaus/impeccable",lang:"TypeScript",weekly:2775,total:"—",tags:["设计"],desc:"改善 AI 生成前端设计的「设计语言/技能」。"},
+
+  {cat:"办公与领域工具",name:"univer",repo:"dream-num/univer",lang:"TypeScript",weekly:6091,total:"~40,000",tags:["办公","运行时"],desc:"面向 AI Agent 的办公套件运行时/SDK，覆盖电子表格、文档、幻灯片与 PDF。"},
+  {cat:"办公与领域工具",name:"financial-services",repo:"anthropics/financial-services",lang:"Python",weekly:1637,total:"—",tags:["金融","技能"],desc:"面向金融服务的参考智能体、技能与数据连接器（投行、股票研究、PE、财富管理）。"},
+  {cat:"办公与领域工具",name:"Vela",repo:"LuxAlgo/Vela",lang:"TypeScript",weekly:null,total:"—",tags:["金融","图表"],desc:"基于 WebGL2/Canvas2D 的交互式金融图表库，本周少见的非 AI 新秀。"},
+
+  {cat:"效率与工具",name:"magpie",repo:"yetone/magpie",lang:"Go",weekly:3465,total:"~8,000",tags:["模型切换"],desc:"给各家 coding agent 换底层模型的小工具，例如让 Codex 跑 DeepSeek、Claude Code 跑 Kimi。"},
+  {cat:"效率与工具",name:"caveman",repo:"JuliusBrussee/caveman",lang:"Rust",weekly:null,total:"—",tags:["省 token"],desc:"Token 节省代理，压缩日志/输出，并「像穴居人一样说话」以削减 token 消耗。"},
+  {cat:"效率与工具",name:"Agent-Reach",repo:"Panniantong/Agent-Reach",lang:"Python",weekly:null,total:"—",tags:["联网"],desc:"让 AI 代理「看见互联网」的 CLI，零 API 费用读写 Twitter/Reddit/YouTube/GitHub/Bilibili/小红书。"},
+  {cat:"效率与工具",name:"coucou",repo:"Louis-CFM/coucou",lang:"Swift",weekly:null,total:"~3,200",tags:["macOS"],desc:"macOS 刘海/菜单栏小部件，监控 Claude Code、Codex、Cursor、Gemini CLI 会话。"},
+  {cat:"效率与工具",name:"AIHOT",repo:"KKKKhazix/AIHOT",lang:"TypeScript",weekly:null,total:"~5,300",tags:["日报"],desc:"行业热点聚合框架，全链路自动日报系统。"},
+];
+
+const fmt = n => n == null ? "—" : n.toLocaleString("en-US");
+const dot = lang => {
+  const c = LANG_COLOR[lang] || "#8b949e";
+  return `<span class="lang"><span class="ldot" style="background:${c}"></span>${lang}</span>`;
+};
+
+// ---- Top 10 ----
+const sorted = [...P].filter(p => p.weekly != null).sort((a,b) => b.weekly - a.weekly).slice(0,10);
+const max = sorted[0].weekly;
+document.getElementById("topList").innerHTML = sorted.map((p,i) => `
+  <div class="top-item">
+    <div class="rank ${i<3 ? 'top'+(i+1) : ''}">${i+1}</div>
+    <div class="t-main">
+      <div class="t-title">
+        <a class="name" href="https://github.com/${p.repo}" target="_blank" rel="noopener">${p.repo}</a>
+        ${dot(p.lang)}
+      </div>
+      <div class="t-desc">${p.desc}</div>
+      <div class="t-tags">${p.tags.map(t=>`<span class="tag">${t}</span>`).join("")}</div>
+    </div>
+    <div class="t-stars">
+      <div class="t-nums"><span class="gain">${fmt(p.weekly)}</span><span class="total">总计 ${p.total}</span></div>
+      <div class="bar"><i style="width:${(p.weekly/max*100).toFixed(1)}%"></i></div>
+    </div>
+  </div>
+`).join("");
+
+// ---- Categories ----
+const groups = {};
+P.forEach(p => (groups[p.cat] = groups[p.cat] || []).push(p));
+document.getElementById("cats").innerHTML = Object.entries(groups).map(([cat,list]) => `
+  <div class="cat">
+    <div class="cat-head"><h3>${cat}</h3><span class="cnt">${list.length}</span></div>
+    <div class="grid">
+      ${list.map(p => `
+        <div class="card">
+          <div class="c-top">
+            <a class="name" href="https://github.com/${p.repo}" target="_blank" rel="noopener">${p.repo}</a>
+            ${p.weekly != null ? `<span class="gain">${fmt(p.weekly)}</span>` : ""}
+          </div>
+          <div class="c-lang">${dot(p.lang)}<span style="margin-left:6px">· 总计 ${p.total}</span></div>
+          <div class="c-desc">${p.desc}</div>
+        </div>
+      `).join("")}
+    </div>
+  </div>
+`).join("");
+
+// ---- Sources ----
+const SRC = [
+  ["GitHub 每周热点项目 2026-10-01 · AI225","https://gh.ai225.com/weekly/2026-10-01"],
+  ["GitHub 趋势周报 2026-10-02 · 王若峰","https://wangruofeng007.com/blog/2026-10/github-trending-weekly-1002-book-and-runtimes/"],
+  ["GitHub 日榜趋势速报 2026-10-03 · SegmentFault","https://segmentfault.com/a/1190000048330308"],
+  ["GitHub 日榜趋势速报 2026-10-04 · 博客园","https://www.cnblogs.com/wflynn/p/23195363"],
+  ["GitHub 日報 2026-10-03 · Qiita","https://qiita.com/Git_Dayori/items/418b6396be99c04a6730"],
+  ["AI Agent GitHub Digest 2026-10-04","https://quidproquo.cc/posts/daily/2026-10-04-ai-agent-github-digest-en/"],
+  ["GitHub 趋势洞察 2026-10-03 · 王若峰","https://wangruofeng007.com/blog/2026-10/github-trending-daily-1003-sensing-crowned/"],
+  ["GitHub 周榜趋势速报 2026-10-02 · 技术栈","https://jishuzhan.net/article/2105960147784577025"],
+  ["GitHub 趨勢周報 Vol.36 · CyberQ","https://cyberq.tw/2026/10/02/github-trends-weekly-report-vol-36/"],
+  ["GitHub 热门仓库 2026-10-01 · 创趣数智","https://wsq.be/github-trending-2026-10-01/"],
+];
+document.getElementById("sources").innerHTML = SRC.map(([t,u])=>`<a href="${u}" target="_blank" rel="noopener">${t}</a>`).join("");
+</script>
+</body>
+</html>
